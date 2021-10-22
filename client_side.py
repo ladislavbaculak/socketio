@@ -1,4 +1,5 @@
 import asyncio
+from logging import exception
 import socketio
 
 
@@ -14,7 +15,7 @@ async def send_message():
 @sio.event
 async def message(msg):
     '''Print a message sended into the room by connected client.'''
-    print(f'{msg["msg"]} FROM {msg["sid"]}')
+    print(msg)
 
 
 @sio.event
@@ -31,7 +32,13 @@ async def disconnect():
 
 async def main():
     await sio.connect('http://localhost:8080')
-    await send_message()
+    while True:
+        try:
+            await send_message()
+            await sio.sleep(3)
+        except KeyboardInterrupt:
+            print('Disconnect!')    
+            break
     await sio.wait()
 
 

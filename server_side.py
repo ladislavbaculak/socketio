@@ -1,9 +1,11 @@
 from aiohttp import web
 import socketio
+import time
 
 sio = socketio.AsyncServer()
 app = web.Application()
 sio.attach(app)
+response_messsage = f'Sending Response {time.time()}!'
 
 
 @sio.event
@@ -20,7 +22,8 @@ async def disconnect(sid):
 
 @sio.event
 async def message_to_rabbitmq(sid, message):
-    await sio.emit('message_from_client', {'msg': message, 'sid': sid})
+    print(sid, message)
+    await sio.send(response_messsage, to=sid)
 
 
 if __name__ == '__main__':

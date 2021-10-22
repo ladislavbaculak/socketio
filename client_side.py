@@ -4,7 +4,10 @@ import socketio
 
 
 sio = socketio.AsyncClient()
-method_userid = {"Method":"GET", "user_id": 1234}
+method_userid = {"Method":"GET",
+                 "user_id": 1234,
+                 "":
+                  }
 
 
 @sio.event

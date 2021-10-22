@@ -17,7 +17,7 @@ async def connect(sid, environ):
 @sio.event
 async def disconnect(sid):
     '''Unconnect and print unconnected message'''
-    await sio.disconnect(sid)
+    print(sid, 'Connected')
 
 
 @sio.event
